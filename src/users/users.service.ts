@@ -25,7 +25,10 @@ export class UsersService {
         firstName: this.configService.get('ADMIN_FIRST_NAME'),
         lastName: this.configService.get('ADMIN_LAST_NAME'),
         role: Role.Admin,
-        password: this.configService.get('ADMIN_PASSWORD'),
+        password: await bcrypt.hash(
+          this.configService.get('ADMIN_PASSWORD'),
+          10,
+        ),
       });
       await this.repo.save(adminUser);
     }
